@@ -4,7 +4,6 @@ const Cart = require('../models/cartModel')
 //add to cart
 async function addCart(req, res) {
     try {
-
         const userId = req.user._id
         const { productId } = req.body
         const quantity = req.body.quantity || 1;
@@ -12,7 +11,6 @@ async function addCart(req, res) {
         if (!productId || !quantity) {
             return res.status(400).json({ success: false, message: "ProductId and Quantity required" })
         }
-
         const cart = await Cart.findOne({ userId })
         if (!cart) {
             const newCart = new Cart({
@@ -38,11 +36,8 @@ async function addCart(req, res) {
         }
 
     } catch (error) {
-
         return res.status(500).json({ success: false, message: error.message })
-
     }
-
 }
 
 
@@ -53,12 +48,12 @@ async function updateCart(req, res) {
 
         const userId = req.user._id
         const { productId, action } = req.body
-        if(!productId || !action){
-          return  res.status(400).json({success:false,message:"productId and action required"})
+        if (!productId || !action) {
+            return res.status(400).json({ success: false, message: "productId and action required" })
         }
         const cart = await Cart.findOne({ userId })
-        if(!cart){
-            return res.status(400).json({success:false,message:"Cart not found"})
+        if (!cart) {
+            return res.status(400).json({ success: false, message: "Cart not found" })
         }
         const existProductIndex = cart.products.findIndex((item) => item.productId.toString() === productId)
         if (existProductIndex === -1) {
@@ -83,9 +78,7 @@ async function updateCart(req, res) {
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message })
-
     }
-
 }
 
 
@@ -106,7 +99,7 @@ async function deleteCartProduct(req, res) {
         return res.status(200).json({ success: true, message: "item removed from the cart Successfully", cart: savedCart })
 
     } catch (error) {
-       return res.status(500).json({ success: false, message: error.message })
+        return res.status(500).json({ success: false, message: error.message })
 
     }
 
@@ -122,17 +115,12 @@ async function getCart(req, res) {
         if (!cart) {
             return res.status(400).json({ success: false, message: "Cart Not found" })
         }
-        const shippingAddress= cart.userId.address
-       
-        
-        return res.status(200).json({ success: true, cart ,address:shippingAddress})
-
+        const shippingAddress = cart.userId.address
+        return res.status(200).json({ success: true, cart, address: shippingAddress })
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message })
-
     }
-
 }
 
 

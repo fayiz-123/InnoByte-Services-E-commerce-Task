@@ -10,6 +10,4 @@ cartRoutes.delete('/deleteCart',userAuth,cartController.deleteCartProduct)
 cartRoutes.get('/cart',userAuth,cartController.getCart)
 
 
-
-
 module.exports=cartRoutes;

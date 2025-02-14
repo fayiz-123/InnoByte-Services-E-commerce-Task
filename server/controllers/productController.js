@@ -3,7 +3,7 @@ const Product = require('../models/productModel')
 //allProducts
 async function allProducts(req, res) {
     try {
-        const allProduct = await Product.find({stock:{$gt:0}})
+        const allProduct = await Product.find({ stock: { $gt: 0 } })
         res.status(201).json({ success: true, allProduct })
 
     } catch (error) {
@@ -38,8 +38,8 @@ async function getOneProduct(req, res) {
 async function addProducts(req, res) {
     try {
         const { name, description, price, stock } = req.body
-        
-        const addProducts = new Product({ name, description, price, stock, image:req.file.path.replace(/^.*[\\/]/, '') })
+
+        const addProducts = new Product({ name, description, price, stock, image: req.file.path.replace(/^.*[\\/]/, '') })
         const newProducts = await addProducts.save()
         res.status(200).json({ success: true, message: "Product Added Successfully", newProducts })
 
@@ -54,8 +54,8 @@ async function updateProduct(req, res) {
     try {
         const { id } = req.params
         const { name, description, price, stock } = req.body
-       const image = req.file.path.replace(/^.*[\\/]/, '')
-        
+        const image = req.file.path.replace(/^.*[\\/]/, '')
+
         const findProd = await Product.findById(id)
         if (!findProd) {
             return res.status(400).json({ success: false, message: "Invalid Product ID" })
@@ -63,21 +63,18 @@ async function updateProduct(req, res) {
         if (!name && !description && !price && !stock) {
             return res.status(402).json({ success: false, message: "No updates available" })
         }
-        if(!image){
-            res.status(400).json({success:false,message:"Image should be needed"})
+        if (!image) {
+            res.status(400).json({ success: false, message: "Image should be needed" })
         }
 
         if (name) findProd.name = name
         if (description) findProd.description = description
         if (price) findProd.price = price
         if (stock) findProd.stock = stock
-        if(image) findProd.image = image
-
-       
+        if (image) findProd.image = image
 
         const updatedProduct = await findProd.save()
         res.status(201).json({ success: true, message: "Product Update Succcessfully", updatedProduct })
-
 
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
@@ -99,8 +96,6 @@ async function deleteProduct(req, res) {
         res.status(500).json({ success: false, message: error.message })
 
     }
-
-
 }
 
 module.exports = {

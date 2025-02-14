@@ -24,9 +24,7 @@ async function adminRegistration(req, res) {
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
-
     }
-
 }
 
 
@@ -45,18 +43,18 @@ async function adminLoggedIn(req, res) {
         else {
             const token = jwt.sign({
                 adminId: checkAdmin._id
-            }, process.env.JWT_SECRET, { expiresIn: '1h' })            
-            res.status(200).json({ success: true, message: "Admin LoggedIn Successfull", token:token })
-           
-            
+            }, process.env.JWT_SECRET, { expiresIn: '1h' })
+            res.status(200).json({ success: true, message: "Admin LoggedIn Successfull", token: token })
         }
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
-
     }
-
 }
+
+
+
 //allProducts
+
 async function allProducts(req, res) {
     try {
         const allProduct = await Product.find()
@@ -64,7 +62,6 @@ async function allProducts(req, res) {
 
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
-
     }
 }
 

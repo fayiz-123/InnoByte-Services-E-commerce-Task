@@ -12,5 +12,4 @@ productRoutes.put('/updateProduct/:id',verifyAdmin,upload.single('image') ,produ
 productRoutes.delete('/deleteProduct/:id',verifyAdmin, productController.deleteProduct)
 
 
-
 module.exports = productRoutes;

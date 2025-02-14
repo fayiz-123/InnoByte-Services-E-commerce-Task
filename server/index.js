@@ -6,7 +6,7 @@ const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGO_URL)
 app.use('/uploads', express.static('uploads'));
 const cors = require('cors')
-const allowedOrigins = ['http://localhost:5173'];
+const allowedOrigins = ['http://localhost:5173','http://localhost:5174','http://localhost:5175'];//add your origins from the frontend
 app.use(cors({
     origin: function (origin, callback) {
         if (!origin || allowedOrigins.includes(origin)) {

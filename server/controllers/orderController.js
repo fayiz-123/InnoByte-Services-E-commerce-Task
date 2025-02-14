@@ -15,23 +15,23 @@ async function placeOrder(req, res) {
         }
         for (const item of cart.products) {
             if (item.quantity > item.productId.stock) {
-                return res.status(400).json({ 
-                    success: false, 
-                    message: `Insufficient stock for product ${item.productId.name || item.productId._id}` 
+                return res.status(400).json({
+                    success: false,
+                    message: `Insufficient stock for product ${item.productId.name || item.productId._id}`
                 });
             }
         }
         const totalamount = cart.products.reduce((total, item) => {
             return (total + item.quantity * item.productId.price) + 10
         }, 0)
-    
+
         const newOrder = new Order({
             userId: userId,
             totalamount: totalamount,
             status: 'Pending'
         })
         const saveOrder = await newOrder.save()
-       
+
         const orderItems = cart.products.map((item) => ({
             orderId: saveOrder._id,
             productId: item.productId._id,
@@ -50,18 +50,14 @@ async function placeOrder(req, res) {
 
         cart.products = []
         await cart.save()
-
-
-
         return res.status(201).json({ success: true, message: "Order Placed Successfully", saveOrder })
-
 
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message })
 
     }
-
 }
+
 
 
 //getOrder
@@ -81,9 +77,6 @@ async function getOrder(req, res) {
                 totalamount: order.totalamount
             }
         }))
-
-
-
         res.status(200).json({ success: true, orderswithItems, })
 
     } catch (error) {
@@ -105,34 +98,35 @@ async function getOneorder(req, res) {
             return res.status(400).json({ success: false, message: "Order Not Found" })
         }
         const orderAlongItems = await OrderItem.find({ orderId: getTheOrder._id }).populate('productId')
-
         return res.status(200).json({ success: true, order: { ...getTheOrder.toObject(), orderAlongItems } })
 
     } catch (error) {
         res.status(500).json({ success: false, message: error.message })
-
     }
-
 }
 
 
 //cancelOrder
 
 async function cancelOrder(req, res) {
-    const userId = req.user._id
-    const { id } = req.params
+    try {
+        const userId = req.user._id
+        const { id } = req.params
 
-    const order = await Order.findOne({ _id: id, userId })
-    if (!order) {
-        return res.status(400).json({ success: false, message: "Order Not Found" })
-    }
-    if (order.status !== 'Pending') {
-        return res.status(400).json({ success: false, message: "Order Cannot be cancelled because it is already" + order.status })
-    }
-    order.status = 'Cancelled'
-    const saveOrderStatus = await order.save()
+        const order = await Order.findOne({ _id: id, userId })
+        if (!order) {
+            return res.status(400).json({ success: false, message: "Order Not Found" })
+        }
+        if (order.status !== 'Pending') {
+            return res.status(400).json({ success: false, message: "Order Cannot be cancelled because it is already" + order.status })
+        }
+        order.status = 'Cancelled'
+        const saveOrderStatus = await order.save()
+        return res.status(200).json({ success: true, message: "Order Cancelled Successfully", saveOrderStatus })
 
-    return res.status(200).json({ success: true, message: "Order Cancelled Successfully", saveOrderStatus })
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message })
+    }
 
 }
 
@@ -143,5 +137,4 @@ module.exports = {
     getOrder,
     getOneorder,
     cancelOrder
-
 }
