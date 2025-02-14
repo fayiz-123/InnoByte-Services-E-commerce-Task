@@ -1,0 +1,75 @@
+General Reset
+
+body {
+    font-family: Arial, sans-serif;
+}
+#home-section .card-container{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin: 0 auto; 
+        padding: 10px; 
+        margin-bottom: -80px;
+}
+
+/* Header */
+#home-section .header {
+    background-color: #333;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+#home-section .header #home-section .logo h1 {
+    font-size: 24px;
+}
+
+/* Main Content */
+#home-section .main-content {
+    padding: 30px;
+    text-align: center;
+}
+
+#home-section .hero {
+    background-color: #f4f4f4;
+    padding: 30px 0;
+    margin-bottom: 27px;
+}
+
+#home-section .hero h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+#home-section .hero p {
+    font-size: 18px;
+    color: #777;
+}
+
+/* Center the Search Bar & Add Proper Spacing */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+    padding-top: 10px; /* Adjust spacing from heading */
+}
+
+/* Styled Search Bar */
+.search-bar {
+    width: 300px;
+    padding: 12px 15px;
+    border-radius: 25px;
+    border: 2px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: 0.3s;
+    text-align: center;
+}
+
+/* Search Bar Hover & Focus Effects */
+.search-bar:hover,
+.search-bar:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
