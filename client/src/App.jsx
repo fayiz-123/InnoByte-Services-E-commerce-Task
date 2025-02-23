@@ -8,6 +8,7 @@ import Checkout from './pages/Checkout';
 import UserProfileUpdate from './pages/userProfileUpdate';
 import OrderHistory from './pages/orderHistory';
 import OrderDetails from './pages/OrderDetails';
+import WishList from './pages/WishList';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProduct from './pages/AdminProduct';
@@ -32,6 +33,7 @@ function App() {
       <Route path="/login" element={<Login/>} />
       <Route path="/signup" element={<Signup/>} />
       <Route path="/cart" element={<Cart/>} />
+      <Route path="/wishlist" element={<WishList/>} />
       <Route path="/product/:id" element={<ProductDetails />}/>
       <Route path="/checkout" element={<Checkout/>} />
       <Route path="/profile" element={<UserProfileUpdate/>} />
