@@ -10,11 +10,12 @@ async function signup(req, res) {
 
         const existingUser = await User.findOne({ email: email })
         if (existingUser) {
-            return res.status(400).json({ success: false, message: "Email already exist", })
+          return  res.status(400).json({ success: false, message: "Email already exist", })
+
         }
         else {
             const hashedPassword = await bcrypt.hash(password, 10)
-
+            
             const newUser = new User({
                 username: username, email: email, password: hashedPassword, address: {
                     street: address.street,
@@ -27,8 +28,8 @@ async function signup(req, res) {
             const savedUser = await newUser.save()
             const token = jwt.sign({
                 userID: savedUser._id
-            }, process.env.JWT_SECRET, { expiresIn: '42h' })
-            res.status(201).json({ success: true, message: "Account Created Successfully", savedUser, token })
+            },process.env.JWT_SECRET,{expiresIn:'42h'})
+           return res.status(201).json({ success: true, message: "Account Created Successfully", savedUser,token })
         }
 
     } catch (error) {
@@ -50,14 +51,14 @@ async function login(req, res) {
             return res.status(400).json({ success: false, message: "Incorrect Password" })
         }
         const token = jwt.sign({
-            userID: existUser._id
-        }, process.env.JWT_SECRET, { expiresIn: '42h' })
+            userID:existUser._id
+        },process.env.JWT_SECRET,{expiresIn:'42h'})
 
-        return res.status(200).json({ success: true, token })
+        return res.status(200).json({success: true, token })
 
 
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message })
+       return res.status(500).json({ success: false, message: error.message })
 
     }
 }
@@ -83,6 +84,7 @@ async function userprofile(req, res) {
 async function updateProfile(req, res) {
     try {
         const { id } = req.params
+        
         const { username, address, password } = req.body
 
         const profile = await User.findById(id)

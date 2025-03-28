@@ -6,14 +6,15 @@ import Cart from './pages/Cart';
 import ProductDetails from './components/ProductDetails';
 import Checkout from './pages/Checkout';
 import UserProfileUpdate from './pages/userProfileUpdate';
-import OrderHistory from './pages/orderHistory';
+import OrderHistory from './pages/OrderHistory'
 import OrderDetails from './pages/OrderDetails';
-import WishList from './pages/WishList';
 import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminProduct from './pages/AdminProduct';
 import AdminAddProduct from './pages/AdminAddProduct';
 import AdminEditProduct from './pages/AdminEditProducts';
+import WishList from './pages/WishList';
+import AdminQRCode from './pages/AdminQrCode';
 
 
 
@@ -44,6 +45,8 @@ function App() {
       <Route path="/adminProducts" element={<AdminProduct />} />
       <Route path="/adminAddProduct" element={<AdminAddProduct/>} />
       <Route path="/adminEditProduct/:id" element={<AdminEditProduct/>} />
+      <Route path="/adminQrCode/:id" element={<AdminQRCode/>} />
+     
 
 
 
